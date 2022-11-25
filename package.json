@@ -4,6 +4,7 @@
   "description": "app that allows a user to jot down ideas for their next projects",
   "main": "index.js",
   "scripts": {
+    "start": "NODE ENV=production node server",
     "dev": "nodemon app.js"
   },
   "license": "MIT",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0"
   }
 }
