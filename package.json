@@ -4,7 +4,7 @@
   "description": "app that allows a user to jot down ideas for their next projects",
   "main": "index.js",
   "scripts": {
-    "start": "NODE ENV=production node server",
+    "start": "NODE ENV=production node app.js",
     "dev": "nodemon app.js"
   },
   "license": "MIT",

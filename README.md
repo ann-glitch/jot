@@ -6,7 +6,7 @@
 ## Install Dependencies
 
 ```
-yarn add
+yarn
 ```
 
 ## Run App
