@@ -4,6 +4,7 @@ const exphbs = require("express-handlebars");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const dotenv = require("dotenv");
 const colors = require("colors");
 const cookieParser = require("cookie-parser");
@@ -35,13 +36,23 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
 //express-session middleware
-app.use(
-  session({
-    secret: "mysecret",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+const sess = {
+  secret: "mysecret",
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+};
+
+if (app.get("env") === "production") {
+  app.set("trust proxy", 1);
+  sess.cookie = {
+    httpOnly: true,
+    secure: true,
+    maxAge: 1000 * 60 * 60 * 48,
+    sameSite: "none",
+  };
+}
+app.use(session(sess));
 
 //connect-flash middleware
 app.use(flash());
@@ -54,6 +65,7 @@ app.use(function (req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
+
 //home router
 app.get("/", (req, res) => {
   res.render("index");
